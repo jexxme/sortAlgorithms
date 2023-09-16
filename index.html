@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Sorting Algorithms</h1>
+    <label for="algorithm">Select an Algorithm:</label>
+    <select id="algorithm">
+        <option value="bubble">Bubble Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="shell">Shell Sort</option> 
+        <option value="quick">Quick Sort</option> 
+        <option value="merge">Merge Sort</option> 
+      <!-- Add more sorting algorithms here -->
+    </select>
+    <label for="speed-slider">Speed:</label>
+    <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
+    <span id="speed-label">50ms</span>
+    
+
+
+  <button id="start-sorting">Start Sorting</button>
+</header>
+
+    <main>
+        <div class="sort-container" id="sort-container">
+            <!-- Bars for displaying the sorting process will be generated here -->
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
