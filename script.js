@@ -6,7 +6,23 @@ document.getElementById("start-sorting").addEventListener("click", startSorting)
 // Sound Class 
 const audioContext = new (window.AudioContext || window.AudioContext)();
 
+
+let sortingCancelled = false;
+let sortingPromise = null;
+
 function startSorting() {
+    if (sortingPromise) {
+        sortingCancelled = true; // Cancel the previous sorting
+        sortingPromise.then(() => {
+            sortingCancelled = false; // Reset the cancel flag
+            startNewSorting();
+        });
+    } else {
+        startNewSorting();
+    }
+}
+
+function startNewSorting() {
     const selectedAlgorithm = document.getElementById("algorithm").value;
     const container = document.getElementById("sort-container");
     const speed = document.getElementById("speed-slider").value;
@@ -29,9 +45,17 @@ function startSorting() {
     const algorithmFunction = algorithmFunctions[selectedAlgorithm];
 
     if (algorithmFunction) {
-        algorithmFunction(container, speed);
+        sortingPromise = algorithmFunction(container, speed);
+        sortingPromise.then(() => {
+            sortingPromise = null; // Reset the promise
+        });
     }
 }
+
+// Add a "Stop Sorting" button click event listener
+document.getElementById("stop-sorting").addEventListener("click", () => {
+    sortingCancelled = true;
+});
 
 function updateSpeedLabel() {
     const speed = document.getElementById("speed-slider").value;
@@ -54,13 +78,24 @@ function createRandomBars(container) {
     }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+function updateSpeedLabel() {
+    const speed = document.getElementById("speed-slider").value;
+    document.getElementById("speed-label").textContent = `${speed}ms`;
+}
 
 async function bubbleSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
     const numBars = bars.length;
     for (let i = 0; i < numBars - 1; i++) {
         for (let j = 0; j < numBars - i - 1; j++) {
+            
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
             const bar1 = bars[j];
             const bar2 = bars[j + 1];
             bar1.style.backgroundColor = "#FF4136"; // Highlight the bars being compared
@@ -83,6 +118,9 @@ async function bubbleSort(container, speed) {
     }
 
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
         const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
         playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
@@ -100,38 +138,6 @@ function playSound(audioContext, frequency) {
     oscillator.start();
     oscillator.stop(audioContext.currentTime + 0.05); // Adjust the duration of the sound
 }
-
-async function shellSort(container, speed) {
-    const bars = container.querySelectorAll(".bar");
-    const numBars = bars.length;
-
-    for (let gap = Math.floor(numBars / 2); gap > 0; gap = Math.floor(gap / 2)) {
-        for (let i = gap; i < numBars; i++) {
-            const tempHeight = parseInt(bars[i].style.height);
-            let j;
-            for (j = i; j >= gap && parseInt(bars[j - gap].style.height) > tempHeight; j -= gap) {
-                bars[j].style.backgroundColor = "#FF4136"; // Highlight the bars being compared
-                bars[j - gap].style.backgroundColor = "#FF4136";
-                await sleep(speed); // Adjust the animation speed
-                bars[j].style.height = bars[j - gap].style.height;
-                bars[j].style.backgroundColor = "#333"; // Reset the color
-                bars[j - gap].style.backgroundColor = "#333";
-            }
-            bars[j].style.height = `${tempHeight}px`;
-
-            // Play a sound after the bars are swapped
-            const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
-            playSound(audioContext, frequency);
-        }
-    }
-    for (let i = 0; i < numBars; i++) {
-        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
-        playSound(audioContext, frequency);
-        bars[i].style.backgroundColor = "#01FF70";
-        await sleep(15); // Adjust the animation speed
-    }
-}
-
 
 
 
@@ -222,17 +228,36 @@ async function selectionSort(container, speed) {
 
 
 
+async function shellSort(container, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
 
+    for (let gap = Math.floor(numBars / 2); gap > 0; gap = Math.floor(gap / 2)) {
+        for (let i = gap; i < numBars; i++) {
+            const tempHeight = parseInt(bars[i].style.height);
+            let j;
+            for (j = i; j >= gap && parseInt(bars[j - gap].style.height) > tempHeight; j -= gap) {
+                bars[j].style.backgroundColor = "#FF4136"; // Highlight the bars being compared
+                bars[j - gap].style.backgroundColor = "#FF4136";
+                await sleep(speed); // Adjust the animation speed
+                bars[j].style.height = bars[j - gap].style.height;
+                bars[j].style.backgroundColor = "#333"; // Reset the color
+                bars[j - gap].style.backgroundColor = "#333";
+            }
+            bars[j].style.height = `${tempHeight}px`;
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+            // Play a sound after the bars are swapped
+            const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
+            playSound(audioContext, frequency);
+        }
+    }
+    for (let i = 0; i < numBars; i++) {
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+        bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
+    }
 }
-
-function updateSpeedLabel() {
-    const speed = document.getElementById("speed-slider").value;
-    document.getElementById("speed-label").textContent = `${speed}ms`;
-}
-
 
 
 

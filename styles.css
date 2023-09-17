@@ -56,15 +56,31 @@ label, select, input, span, button {
 }
 
 #start-sorting {
-    padding: 5px 10px;
-    background-color: #0074d9;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin: 5px;
-    margin-left: auto;
+    background-color: #07bb0d; /* Red background color */
+    color: #fff; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove button border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
 
 }
+
+.stop-button {
+    background-color: #FF4136; /* Red background color */
+    color: #fff; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove button border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.stop-button:hover {
+    background-color: #D81E0E; /* Darker red on hover */
+}
+
+
 
 main {
     display: flex;
