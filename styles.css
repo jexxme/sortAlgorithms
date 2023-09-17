@@ -5,8 +5,6 @@ body {
     margin: 0;
     padding: 0;
 }
-/* styles.css */
-/* styles.css */
 
 header {
     background-color: #333;
@@ -14,7 +12,7 @@ header {
     text-align: center;
     padding: 20px 0;
     display: flex;
-    justify-content: normal;
+    justify-content: space-between; /* To place everything on the right side */
     align-items: center;
 }
 
@@ -23,14 +21,16 @@ h1 {
     font-size: 24px;
 }
 
+.header-buttons {
+    display: flex;
+    align-items: center;
+}
+
 /* Adjust the spacing here */
 label, select, input, span, button {
     margin: 0 2px; /* Add margin to all elements */
     font-size: 14px;
 }
-
-
-
 
 /* Style the dropdown select */
 #algorithm {
@@ -43,11 +43,12 @@ label, select, input, span, button {
     outline: none;
 }
 
+#algorithm:hover {
+    background-color: #efefef; /* Darker red on hover */
+}
 
-
-
-
-#algorithm, #speed-slider {
+#algorithm,
+#speed-slider {
     padding: 0px;
 }
 
@@ -63,7 +64,10 @@ label, select, input, span, button {
     border-radius: 4px; /* Rounded corners */
     cursor: pointer; /* Change cursor to a pointer on hover */
     transition: background-color 0.3s; /* Smooth background color transition */
+}
 
+#start-sorting:hover {
+    background-color: #07bb0ddb; /* Darker red on hover */
 }
 
 .stop-button {
@@ -74,13 +78,12 @@ label, select, input, span, button {
     border-radius: 4px; /* Rounded corners */
     cursor: pointer; /* Change cursor to a pointer on hover */
     transition: background-color 0.3s; /* Smooth background color transition */
+    
 }
 
 .stop-button:hover {
     background-color: #D81E0E; /* Darker red on hover */
 }
-
-
 
 main {
     display: flex;
