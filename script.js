@@ -3,6 +3,9 @@ document.getElementById("start-sorting").addEventListener("click", startSorting)
 document.getElementById("speed-slider").addEventListener("input", updateSpeedLabel);
 document.getElementById("start-sorting").addEventListener("click", startSorting);
 
+// Sound Class 
+const audioContext = new (window.AudioContext || window.AudioContext)();
+
 function startSorting() {
     const selectedAlgorithm = document.getElementById("algorithm").value;
     const container = document.getElementById("sort-container");
@@ -30,8 +33,6 @@ function startSorting() {
     }
 }
 
-document.getElementById("speed-slider").addEventListener("input", updateSpeedLabel);
-
 function updateSpeedLabel() {
     const speed = document.getElementById("speed-slider").value;
     document.getElementById("speed-label").textContent = `${speed}ms`;
@@ -53,6 +54,8 @@ function createRandomBars(container) {
     }
 }
 
+
+
 async function bubbleSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
     const numBars = bars.length;
@@ -69,11 +72,32 @@ async function bubbleSort(container, speed) {
                 const tempHeight = bar1.style.height;
                 bar1.style.height = bar2.style.height;
                 bar2.style.height = tempHeight;
+
+                // Play a sound after the bars are swapped
+                const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
+                playSound(audioContext, frequency);
             }
             bar1.style.backgroundColor = "#333"; // Reset the color
             bar2.style.backgroundColor = "#333";
         }
     }
+
+    for (let i = 0; i < numBars; i++) {
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+        bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
+    }
+    
+}
+
+function playSound(audioContext, frequency) {
+    const oscillator = audioContext.createOscillator();
+    oscillator.type = "sine"; // You can change the wave type as needed
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    oscillator.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.05); // Adjust the duration of the sound
 }
 
 async function shellSort(container, speed) {
@@ -94,6 +118,10 @@ async function shellSort(container, speed) {
             }
             bars[j].style.height = `${tempHeight}px`;
         }
+    }
+    // Highlight the entire sorted array
+    for (let i = 0; i < numBars; i++) {
+        bars[i].style.backgroundColor = "#01FF70";
     }
 }
 
