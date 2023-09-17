@@ -15,14 +15,14 @@ function startSorting() {
         sortingCancelled = true; // Cancel the previous sorting
         sortingPromise.then(() => {
             sortingCancelled = false; // Reset the cancel flag
-            startNewSorting();
+            startNewSorting(); // Assuming there is a function named startNewSorting
         });
     } else {
-        startNewSorting();
+        initiateSorting(); // Call the renamed function
     }
 }
 
-function startSorting() {
+function initiateSorting() { // Renamed function
     sortingPromise = null; // Reset the sortingPromise
     if (sortingCancelled) {
         sortingCancelled = false; // Reset the cancel flag
@@ -55,7 +55,6 @@ function startSorting() {
         });
     }
 }
-
 
 // Add a "Stop Sorting" button click event listener
 document.getElementById("stop-sorting").addEventListener("click", () => {
@@ -314,6 +313,9 @@ async function quickSort(container, speed) {
         let i = low - 1;
 
         for (let j = low; j <= high - 1; j++) {
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
             const currentHeight = parseInt(bars[j].style.height);
 
             bars[j].style.backgroundColor = "#FF851B"; // Highlight current bar being compared
@@ -348,11 +350,22 @@ async function quickSort(container, speed) {
 
     async function quickSortRecursive(low, high) {
         if (low < high) {
-            const pivotIndex = await partition(low, high);
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
+    
+            const pivotIndex = await partition(low, high);
+    
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
+    
             await quickSortRecursive(low, pivotIndex - 1);
+    
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
+    
             await quickSortRecursive(pivotIndex + 1, high);
         }
     }
