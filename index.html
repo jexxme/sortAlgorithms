@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,8 @@
 <body>
 <header>
     <h1>Sorting Algorithms</h1>
+    <div class="header-buttons">
+
     <label for="algorithm">Select an Algorithm:</label>
     <select id="algorithm">
         <option value="bubble">Bubble Sort</option>
@@ -23,19 +26,17 @@
     <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
     <span id="speed-label">50ms</span>
     <span id="speed-label">Delay</span>
-    
-
-
-  <button id="start-sorting">Start Sorting</button>
-  <button id="stop-sorting" class="stop-button">Stop Sorting</button>
+    <button id="start-sorting">Start Sorting</button>
+    <button id="stop-sorting" class="stop-button">Stop Sorting</button>
+</div>
 
 </header>
 
-    <main>
-        <div class="sort-container" id="sort-container">
-            <!-- Bars for displaying the sorting process will be generated here -->
-        </div>
-    </main>
-    <script src="script.js"></script>
+<main>
+    <div class="sort-container" id="sort-container">
+        <!-- Bars for displaying the sorting process will be generated here -->
+    </div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
