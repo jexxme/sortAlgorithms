@@ -18,6 +18,7 @@ function startSorting() {
         selection: selectionSort,
         quick: quickSort,
         merge: mergeSort,
+        heap: heapSort,
         // Add more sorting algorithms here
     };
 
@@ -337,5 +338,71 @@ async function mergeSort(container, speed) {
     // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
         bars[i].style.backgroundColor = "#01FF70";
+    }
+}
+
+
+
+
+
+async function heapSort(container, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
+
+    // Build a max heap
+    for (let i = Math.floor(numBars / 2) - 1; i >= 0; i--) {
+        await heapify(bars, numBars, i, speed);
+    }
+
+    // Extract elements one by one from the heap
+    for (let i = numBars - 1; i > 0; i--) {
+        // Move the current root to the end
+        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bar being moved
+        await sleep(speed);
+
+        const tempHeight = bars[0].style.height;
+        bars[0].style.height = bars[i].style.height;
+        bars[i].style.height = tempHeight;
+
+        bars[i].style.backgroundColor = "#01FF70"; // Highlight the sorted element
+        await sleep(speed);
+        bars[i].style.backgroundColor = "#333"; // Reset the color
+
+        // Call max heapify on the reduced heap
+        await heapify(bars, i, 0, speed);
+    }
+
+    // Highlight the entire sorted array
+    for (let i = 0; i < numBars; i++) {
+        bars[i].style.backgroundColor = "#01FF70";
+    }
+}
+
+async function heapify(bars, numBars, i, speed) {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+
+    if (left < numBars && parseInt(bars[left].style.height) > parseInt(bars[largest].style.height)) {
+        largest = left;
+    }
+
+    if (right < numBars && parseInt(bars[right].style.height) > parseInt(bars[largest].style.height)) {
+        largest = right;
+    }
+
+    if (largest !== i) {
+        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bar being swapped
+        bars[largest].style.backgroundColor = "#FF4136";
+        await sleep(speed);
+
+        const tempHeight = bars[i].style.height;
+        bars[i].style.height = bars[largest].style.height;
+        bars[largest].style.height = tempHeight;
+
+        bars[i].style.backgroundColor = "#333"; // Reset the color
+        bars[largest].style.backgroundColor = "#333";
+
+        await heapify(bars, numBars, largest, speed);
     }
 }
