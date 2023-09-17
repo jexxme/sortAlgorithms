@@ -91,6 +91,7 @@ async function bubbleSort(container, speed) {
     
 }
 
+
 function playSound(audioContext, frequency) {
     const oscillator = audioContext.createOscillator();
     oscillator.type = "sine"; // You can change the wave type as needed
@@ -117,11 +118,17 @@ async function shellSort(container, speed) {
                 bars[j - gap].style.backgroundColor = "#333";
             }
             bars[j].style.height = `${tempHeight}px`;
+
+            // Play a sound after the bars are swapped
+            const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
+            playSound(audioContext, frequency);
         }
     }
-    // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
 }
 
