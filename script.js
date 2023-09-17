@@ -22,7 +22,12 @@ function startSorting() {
     }
 }
 
-function startNewSorting() {
+function startSorting() {
+    sortingPromise = null; // Reset the sortingPromise
+    if (sortingCancelled) {
+        sortingCancelled = false; // Reset the cancel flag
+    }
+    
     const selectedAlgorithm = document.getElementById("algorithm").value;
     const container = document.getElementById("sort-container");
     const speed = document.getElementById("speed-slider").value;
@@ -50,6 +55,7 @@ function startNewSorting() {
         });
     }
 }
+
 
 // Add a "Stop Sorting" button click event listener
 document.getElementById("stop-sorting").addEventListener("click", () => {
