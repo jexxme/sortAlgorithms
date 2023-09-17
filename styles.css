@@ -1,11 +1,17 @@
 /* styles.css */
 
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-}
+    font-family: 'Roboto', sans-serif;
+  }
+  
 
+
+  
 header {
     background-color: #333;
     color: white;
@@ -37,15 +43,21 @@ label, select, input, span, button {
     background-color: #f2f2f2;
     border: 2px solid #ccc;
     color: #333;
-    padding: 5px;
+    padding: 10px 20px; /* Increase padding for better clickability */
     font-size: 16px;
     border-radius: 5px;
     outline: none;
+    cursor: pointer; /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth transition on hover */
 }
 
-#algorithm:hover {
-    background-color: #efefef; /* Darker red on hover */
+#algorithm:hover,
+#algorithm:focus {
+    background-color: #efefef; /* Darker color on hover and focus */
+    border-color: #aaa; /* Darker border color on hover and focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow on hover and focus */
 }
+
 
 #algorithm,
 #speed-slider {
@@ -86,11 +98,12 @@ label, select, input, span, button {
 }
 
 main {
+    flex-grow: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-}
+  }
 
 .sort-container {
     width: 80%;
@@ -107,3 +120,41 @@ main {
     background-color: #333;
     margin: 0 2px;
 }
+
+
+
+footer {
+    text-align: center; /* Center-align the content horizontally */
+    background-color: #333; /* Choose your preferred background color */
+    color: #fff; /* Choose your preferred text color */
+    padding: 20px 0; /* Adjust as needed */
+
+}
+  
+  .footer-content {
+    display: inline-block; /* Center-align inline content */
+  }
+  
+  .social-icons {
+    margin-top: 10px; /* Add some space between the name and icons */
+  }
+  
+  .social-icons a {
+    margin: 0 10px; /* Add space between icons */
+    display: inline-block; /* Display icons in a row */
+    text-decoration: none; /* Remove underlines from links */
+    color: #fff; /* Choose icon color */
+  }
+  
+  /* Style the icons as needed */
+  .social-icons img {
+    width: 24px; /* Adjust the icon size as needed */
+    height: 24px;
+  }
+
+  .credit {
+    font-size: 14px; /* Adjust the font size as needed */
+    /* Additional styles if desired */
+  }
+  
+  
