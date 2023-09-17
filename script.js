@@ -38,7 +38,6 @@ function startNewSorting() {
         quick: quickSort,
         merge: mergeSort,
         heap: heapSort,
-        radix: radixSort,
         // Add more sorting algorithms here
     };
 
@@ -159,6 +158,10 @@ async function insertionSort(container, speed) {
         currentBar.style.backgroundColor = "#FF4136"; // Highlight the current element being considered
 
         while (j >= 0 && parseInt(bars[j].style.height) > currentHeight) {
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
+
             bars[j + 1].style.height = bars[j].style.height;
             bars[j].style.backgroundColor = "#FF851B"; // Highlight the element being moved
             await sleep(speed);
@@ -169,17 +172,25 @@ async function insertionSort(container, speed) {
 
         bars[j + 1].style.height = `${currentHeight}px`;
         currentBar.style.backgroundColor = "#01FF70"; // Highlight the sorted element
+
+        // Play a sound after the bars are swapped
+        const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+
         await sleep(speed);
         currentBar.style.backgroundColor = "#333"; // Reset the color
     }
 
-    // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
 }
-
-
 
 
 
@@ -195,6 +206,10 @@ async function selectionSort(container, speed) {
         let minIndex = i;
 
         for (let j = i + 1; j < numBars; j++) {
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
+
             bars[j].style.backgroundColor = "#FF4136"; // Highlight the current comparison
             await sleep(speed);
 
@@ -219,11 +234,29 @@ async function selectionSort(container, speed) {
         }
 
         bars[i].style.backgroundColor = "#01FF70"; // Highlight the sorted element
+
+        // Play a sound after the bars are swapped
+        const frequency = 10 + (i * 10); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+
         await sleep(speed);
+        
     }
 
-    // Highlight the entire sorted array
-    bars[numBars - 1].style.backgroundColor = "#01FF70";
+    // Reset the color of all bars
+    bars.forEach(bar => {
+        bar.style.backgroundColor = "#333";
+    });
+
+    for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+        bars[i].style.backgroundColor = "#01FF70";
+        await sleep(20); // Adjust the animation speed
+    }
 }
 
 
@@ -252,13 +285,15 @@ async function shellSort(container, speed) {
         }
     }
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
         const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
         playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
         await sleep(15); // Adjust the animation speed
     }
 }
-
 
 
 // Add Quick Sort function
@@ -287,6 +322,9 @@ async function quickSort(container, speed) {
             }
 
             bars[j].style.backgroundColor = "#333"; // Reset the color
+            // Play a sound after the bars are swapped
+            const frequency = 10 + (j * 10); // Adjust the initial frequency and increment as needed
+            playSound(audioContext, frequency);
         }
 
         // Swap the pivot bar with the bar at position i+1
@@ -305,6 +343,9 @@ async function quickSort(container, speed) {
     async function quickSortRecursive(low, high) {
         if (low < high) {
             const pivotIndex = await partition(low, high);
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
             await quickSortRecursive(low, pivotIndex - 1);
             await quickSortRecursive(pivotIndex + 1, high);
         }
@@ -313,9 +354,14 @@ async function quickSort(container, speed) {
     const numBars = bars.length;
     await quickSortRecursive(0, numBars - 1);
 
-    // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
 }
 
@@ -349,6 +395,9 @@ async function mergeSort(container, speed) {
         let k = low;
 
         while (i < leftArray.length && j < rightArray.length) {
+            // Play a sound after the bars are swapped
+        const frequency = 10 + (i * 10); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
             if (leftArray[i] < rightArray[j]) {
                 bars[k].style.backgroundColor = "#FF851B"; // Highlight the current bar being compared
                 bars[k].style.height = leftArray[i] + "px";
@@ -396,9 +445,14 @@ async function mergeSort(container, speed) {
     const numBars = bars.length;
     await mergeSortRecursive(0, numBars - 1);
 
-    // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
 }
 
@@ -426,6 +480,9 @@ async function heapSort(container, speed) {
         bars[i].style.height = tempHeight;
 
         bars[i].style.backgroundColor = "#01FF70"; // Highlight the sorted element
+        // Play a sound after the bars are swapped
+        const frequency = 10 + (i * 10); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         await sleep(speed);
         bars[i].style.backgroundColor = "#333"; // Reset the color
 
@@ -433,9 +490,14 @@ async function heapSort(container, speed) {
         await heapify(bars, i, 0, speed);
     }
 
-    // Highlight the entire sorted array
     for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
         bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
 }
 
@@ -465,65 +527,5 @@ async function heapify(bars, numBars, i, speed) {
         bars[largest].style.backgroundColor = "#333";
 
         await heapify(bars, numBars, largest, speed);
-    }
-}
-
-
-
-
-async function radixSort(container, speed) {
-    const bars = container.querySelectorAll(".bar");
-    const numBars = bars.length;
-
-    // Find the maximum element to know the number of digits
-    let max = parseInt(bars[0].style.height);
-    for (let i = 1; i < numBars; i++) {
-        const height = parseInt(bars[i].style.height);
-        if (height > max) {
-            max = height;
-        }
-    }
-
-    // Perform counting sort for every digit, starting from the least significant digit
-    for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-        await countingSort(bars, numBars, exp, speed);
-    }
-
-    // Highlight the entire sorted array
-    for (let i = 0; i < numBars; i++) {
-        bars[i].style.backgroundColor = "#01FF70";
-    }
-}
-
-async function countingSort(bars, numBars, exp, speed) {
-    const output = new Array(numBars);
-    const count = new Array(10).fill(0);
-
-    // Store count of occurrences in count[]
-    for (let i = 0; i < numBars; i++) {
-        const height = parseInt(bars[i].style.height);
-        count[Math.floor(height / exp) % 10]++;
-    }
-
-    // Change count[i] so that count[i] contains the actual position of this digit in output[]
-    for (let i = 1; i < 10; i++) {
-        count[i] += count[i - 1];
-    }
-
-    // Build the output array
-    for (let i = numBars - 1; i >= 0; i--) {
-        const height = parseInt(bars[i].style.height);
-        const index = Math.floor(height / exp) % 10;
-        output[count[index] - 1] = height;
-        count[index]--;
-    }
-
-    // Update the bars with the sorted values
-    for (let i = 0; i < numBars; i++) {
-        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bar being moved
-        await sleep(speed);
-        bars[i].style.height = output[i] + "px";
-        bars[i].style.backgroundColor = "#333"; // Reset the color
-        await sleep(speed);
     }
 }
