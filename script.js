@@ -19,6 +19,7 @@ function startSorting() {
         quick: quickSort,
         merge: mergeSort,
         heap: heapSort,
+        radix: radixSort,
         // Add more sorting algorithms here
     };
 
@@ -404,5 +405,65 @@ async function heapify(bars, numBars, i, speed) {
         bars[largest].style.backgroundColor = "#333";
 
         await heapify(bars, numBars, largest, speed);
+    }
+}
+
+
+
+
+async function radixSort(container, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
+
+    // Find the maximum element to know the number of digits
+    let max = parseInt(bars[0].style.height);
+    for (let i = 1; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        if (height > max) {
+            max = height;
+        }
+    }
+
+    // Perform counting sort for every digit, starting from the least significant digit
+    for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
+        await countingSort(bars, numBars, exp, speed);
+    }
+
+    // Highlight the entire sorted array
+    for (let i = 0; i < numBars; i++) {
+        bars[i].style.backgroundColor = "#01FF70";
+    }
+}
+
+async function countingSort(bars, numBars, exp, speed) {
+    const output = new Array(numBars);
+    const count = new Array(10).fill(0);
+
+    // Store count of occurrences in count[]
+    for (let i = 0; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        count[Math.floor(height / exp) % 10]++;
+    }
+
+    // Change count[i] so that count[i] contains the actual position of this digit in output[]
+    for (let i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // Build the output array
+    for (let i = numBars - 1; i >= 0; i--) {
+        const height = parseInt(bars[i].style.height);
+        const index = Math.floor(height / exp) % 10;
+        output[count[index] - 1] = height;
+        count[index]--;
+    }
+
+    // Update the bars with the sorted values
+    for (let i = 0; i < numBars; i++) {
+        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bar being moved
+        await sleep(speed);
+        bars[i].style.height = output[i] + "px";
+        bars[i].style.backgroundColor = "#333"; // Reset the color
+        await sleep(speed);
     }
 }
