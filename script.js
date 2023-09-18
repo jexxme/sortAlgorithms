@@ -16,13 +16,39 @@ let sortingPromise = null;
 
 
 
-// Add a global variable to track the mute state (true for muted, false for unmuted)
-let isMuted = false;
 
-// Function to toggle the mute state
-document.getElementById("mute-sound").addEventListener("change", () => {
-    isMuted = document.getElementById("mute-sound").checked;
-});
+
+// Initialize the mute state as true (sound off)
+let isMuted = true;
+
+// Function to toggle the sound icon and mute state
+function toggleSound() {
+    const soundOnIcon = document.getElementById("sound-on");
+    const soundOffIcon = document.getElementById("sound-off");
+
+    // Toggle the mute state
+    isMuted = !isMuted;
+
+    // Toggle the visibility of the icons
+    if (isMuted) {
+        soundOnIcon.style.display = "none";
+        soundOffIcon.style.display = "inline";
+    } else {
+        soundOnIcon.style.display = "inline";
+        soundOffIcon.style.display = "none";
+    }
+}
+
+// Add event listener to the sound control div
+document.getElementById("sound-control").addEventListener("click", toggleSound);
+
+// Initialize the sound state (off)
+toggleSound();
+console.log("Jetzt sollte der sound togglen")
+
+
+
+
 
 
 function startSorting() {

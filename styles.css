@@ -96,6 +96,7 @@ button {
     /* Change cursor to a pointer on hover */
     transition: background-color 0.3s;
     /* Smooth background color transition */
+
 }
 
 #start-sorting:hover {
@@ -196,4 +197,15 @@ footer {
     font-size: 14px;
     /* Adjust the font size as needed */
     /* Additional styles if desired */
+}
+
+
+#sound-control {
+    cursor: pointer;
+    display: inline-block;
+    margin: 1%;
+}
+
+#sound-off {
+    display: none;
 }
