@@ -1,11 +1,15 @@
+document.getElementById("start-sorting").addEventListener("click", toggleStartStopButton);
 
-document.getElementById("start-sorting").addEventListener("click", startSorting);
+// document.getElementById("start-sorting").addEventListener("click", startSorting);
 document.getElementById("speed-slider").addEventListener("input", updateSpeedLabel);
-document.getElementById("start-sorting").addEventListener("click", startSorting);
 
 // Sound Class 
 const audioContext = new (window.AudioContext || window.AudioContext)();
 
+
+
+// Add a global variable to track the sorting state (true for "Start", false for "Stop")
+let isSorting = false;
 
 let sortingCancelled = false;
 let sortingPromise = null;
@@ -15,7 +19,7 @@ function startSorting() {
         sortingCancelled = true; // Cancel the previous sorting
         sortingPromise.then(() => {
             sortingCancelled = false; // Reset the cancel flag
-            startNewSorting(); // Assuming there is a function named startNewSorting
+            // startNewSorting(); // Assuming there is a function named startNewSorting
         });
     } else {
         initiateSorting(); // Call the renamed function
@@ -27,7 +31,7 @@ function initiateSorting() { // Renamed function
     if (sortingCancelled) {
         sortingCancelled = false; // Reset the cancel flag
     }
-    
+
     const selectedAlgorithm = document.getElementById("algorithm").value;
     const container = document.getElementById("sort-container");
     const speed = document.getElementById("speed-slider").value;
@@ -56,10 +60,25 @@ function initiateSorting() { // Renamed function
     }
 }
 
-// Add a "Stop Sorting" button click event listener
-document.getElementById("stop-sorting").addEventListener("click", () => {
-    sortingCancelled = true;
-});
+
+// Function to toggle the sorting state and update the button's text and color
+function toggleStartStopButton() {
+    const startStopButton = document.getElementById("start-sorting");
+    if (isSorting) {
+        // Change to "Start" state
+        startStopButton.textContent = "Start Sorting";
+        startStopButton.style.backgroundColor = "#009e05"; // Green
+        startSorting(); // Add a function to stop sorting
+    } else {
+        // Change to "Stop" state
+        startStopButton.textContent = "Stop Sorting";
+        startStopButton.style.backgroundColor = "#FF4136"; // Red
+        startSorting(); // Add a function to start sorting
+    }
+    isSorting = !isSorting; // Toggle the sorting state
+}
+
+
 
 function updateSpeedLabel() {
     const speed = document.getElementById("speed-slider").value;
@@ -96,7 +115,7 @@ async function bubbleSort(container, speed) {
     const numBars = bars.length;
     for (let i = 0; i < numBars - 1; i++) {
         for (let j = 0; j < numBars - i - 1; j++) {
-            
+
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
@@ -130,7 +149,7 @@ async function bubbleSort(container, speed) {
         bars[i].style.backgroundColor = "#01FF70";
         await sleep(15); // Adjust the animation speed
     }
-    
+
 }
 
 
@@ -245,7 +264,7 @@ async function selectionSort(container, speed) {
         playSound(audioContext, frequency);
 
         await sleep(speed);
-        
+
     }
 
     // Reset the color of all bars
@@ -353,19 +372,19 @@ async function quickSort(container, speed) {
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
-    
+
             const pivotIndex = await partition(low, high);
-    
+
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
-    
+
             await quickSortRecursive(low, pivotIndex - 1);
-    
+
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
-    
+
             await quickSortRecursive(pivotIndex + 1, high);
         }
     }
@@ -415,8 +434,8 @@ async function mergeSort(container, speed) {
 
         while (i < leftArray.length && j < rightArray.length) {
             // Play a sound after the bars are swapped
-        const frequency = 10 + (i * 10); // Adjust the initial frequency and increment as needed
-        playSound(audioContext, frequency);
+            const frequency = 10 + (i * 10); // Adjust the initial frequency and increment as needed
+            playSound(audioContext, frequency);
             if (leftArray[i] < rightArray[j]) {
                 bars[k].style.backgroundColor = "#FF851B"; // Highlight the current bar being compared
                 bars[k].style.height = leftArray[i] + "px";
