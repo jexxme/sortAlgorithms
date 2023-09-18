@@ -7,25 +7,27 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-  }
-  
+
+}
 
 
-  
 header {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 20px 0;
     display: flex;
-    justify-content: space-between; /* To place everything on the right side */
+    justify-content: space-between;
+    /* To place everything on the right side */
     align-items: center;
 }
 
 h1 {
-    margin: 0;
-    font-size: 24px;
+    padding-left: 20px;
+    font-size: 26px;
+    text-align: center;
 }
+
 
 .header-buttons {
     display: flex;
@@ -33,9 +35,14 @@ h1 {
 }
 
 /* Adjust the spacing here */
-label, select, input, span, button {
-    margin: 0 2px; /* Add margin to all elements */
-    font-size: 14px;
+label,
+select,
+input,
+span,
+button {
+    margin: 0 2px;
+    /* Add margin to all elements */
+    font-size: 16px;
 }
 
 /* Style the dropdown select */
@@ -43,19 +50,25 @@ label, select, input, span, button {
     background-color: #f2f2f2;
     border: 2px solid #ccc;
     color: #333;
-    padding: 10px 20px; /* Increase padding for better clickability */
+    padding: 10px 20px;
+    /* Increase padding for better clickability */
     font-size: 16px;
     border-radius: 5px;
     outline: none;
-    cursor: pointer; /* Change cursor to a pointer on hover */
-    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth transition on hover */
+    cursor: pointer;
+    /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    /* Smooth transition on hover */
 }
 
 #algorithm:hover,
 #algorithm:focus {
-    background-color: #efefef; /* Darker color on hover and focus */
-    border-color: #aaa; /* Darker border color on hover and focus */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow on hover and focus */
+    background-color: #efefef;
+    /* Darker color on hover and focus */
+    border-color: #aaa;
+    /* Darker border color on hover and focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    /* Add a subtle box shadow on hover and focus */
 }
 
 
@@ -69,32 +82,48 @@ label, select, input, span, button {
 }
 
 #start-sorting {
-    background-color: #07bb0d; /* Red background color */
-    color: #fff; /* White text color */
-    padding: 10px 20px; /* Padding around the text */
-    border: none; /* Remove button border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to a pointer on hover */
-    transition: background-color 0.3s; /* Smooth background color transition */
+    background-color: #07bb0d;
+    /* Red background color */
+    color: #fff;
+    /* White text color */
+    padding: 10px 20px;
+    /* Padding around the text */
+    border: none;
+    /* Remove button border */
+    border-radius: 4px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s;
+    /* Smooth background color transition */
 }
 
 #start-sorting:hover {
-    background-color: #07bb0ddb; /* Darker red on hover */
+    background-color: #07bb0ddb;
+    /* Darker red on hover */
 }
 
 .stop-button {
-    background-color: #FF4136; /* Red background color */
-    color: #fff; /* White text color */
-    padding: 10px 20px; /* Padding around the text */
-    border: none; /* Remove button border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to a pointer on hover */
-    transition: background-color 0.3s; /* Smooth background color transition */
-    
+    background-color: #FF4136;
+    /* Red background color */
+    color: #fff;
+    /* White text color */
+    padding: 10px 20px;
+    /* Padding around the text */
+    border: none;
+    /* Remove button border */
+    border-radius: 4px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Change cursor to a pointer on hover */
+    transition: background-color 0.3s;
+    /* Smooth background color transition */
+
 }
 
 .stop-button:hover {
-    background-color: #D81E0E; /* Darker red on hover */
+    background-color: #D81E0E;
+    /* Darker red on hover */
 }
 
 main {
@@ -103,7 +132,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+}
 
 .sort-container {
     width: 80%;
@@ -124,37 +153,47 @@ main {
 
 
 footer {
-    text-align: center; /* Center-align the content horizontally */
-    background-color: #333; /* Choose your preferred background color */
-    color: #fff; /* Choose your preferred text color */
-    padding: 20px 0; /* Adjust as needed */
+    text-align: center;
+    /* Center-align the content horizontally */
+    background-color: #333;
+    /* Choose your preferred background color */
+    color: #fff;
+    /* Choose your preferred text color */
+    padding: 20px 0;
+    /* Adjust as needed */
 
 }
-  
-  .footer-content {
-    display: inline-block; /* Center-align inline content */
-  }
-  
-  .social-icons {
-    margin-top: 10px; /* Add some space between the name and icons */
-  }
-  
-  .social-icons a {
-    margin: 0 10px; /* Add space between icons */
-    display: inline-block; /* Display icons in a row */
-    text-decoration: none; /* Remove underlines from links */
-    color: #fff; /* Choose icon color */
-  }
-  
-  /* Style the icons as needed */
-  .social-icons img {
-    width: 24px; /* Adjust the icon size as needed */
-    height: 24px;
-  }
 
-  .credit {
-    font-size: 14px; /* Adjust the font size as needed */
+.footer-content {
+    display: inline-block;
+    /* Center-align inline content */
+}
+
+.social-icons {
+    margin-top: 10px;
+    /* Add some space between the name and icons */
+}
+
+.social-icons a {
+    margin: 0 10px;
+    /* Add space between icons */
+    display: inline-block;
+    /* Display icons in a row */
+    text-decoration: none;
+    /* Remove underlines from links */
+    color: #fff;
+    /* Choose icon color */
+}
+
+/* Style the icons as needed */
+.social-icons img {
+    width: 24px;
+    /* Adjust the icon size as needed */
+    height: 24px;
+}
+
+.credit {
+    font-size: 14px;
+    /* Adjust the font size as needed */
     /* Additional styles if desired */
-  }
-  
-  
+}

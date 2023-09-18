@@ -1,47 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorting Algorithms</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Algorithms</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<header>
+  <header>
     <h1>Sorting Algorithms</h1>
     <div class="header-buttons">
 
-    <label for="algorithm">Select an Algorithm:</label>
-    <select id="algorithm">
-        <option value="bubble">Bubble Sort</option>
-        <option value="insertion">Insertion Sort</option>
-        <option value="selection">Selection Sort</option>
-        <option value="shell">Shell Sort</option> 
-        <option value="quick">Quick Sort</option> 
-        <option value="merge">Merge Sort</option> 
-        <option value="heap">Heap Sort</option> 
-      <!-- Add more sorting algorithms here -->
-    </select>
-    <label for="speed-slider">Speed:</label>
-    <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
-    <span id="speed-label">50ms</span>
-    <span id="speed-label">Delay</span>
-    <button id="start-sorting">Start Sorting</button>
-    <button id="stop-sorting" class="stop-button">Stop Sorting</button>
-</div>
+      <label for="algorithm">Select an Algorithm:</label>
+      <select id="algorithm">
+        <optgroup label="O(n^2)">
+          <option value="bubble">Bubble Sort</option>
+          <option value="insertion">Insertion Sort</option>
+          <option value="selection">Selection Sort</option>
+        </optgroup>
+        <optgroup label="O(n log n)">
+          <option value="shell">Shell Sort</option>
+          <option value="quick">Quick Sort</option>
+          <option value="merge">Merge Sort</option>
+          <option value="heap">Heap Sort</option>
+        </optgroup>
+        <!-- Add more sorting algorithms here -->
+      </select>
 
-</header>
-
-<main>
-    <div class="sort-container" id="sort-container">
-        <!-- Bars for displaying the sorting process will be generated here -->
+      <label for="speed-slider">Speed:</label>
+      <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
+      <span id="speed-label">50ms</span>
+      <span id="speed-label">Delay</span>
+      <button id="start-sorting">Start Sorting</button>
+      <button id="stop-sorting" class="stop-button">Stop Sorting</button>
     </div>
-</main>
 
-<footer>
+  </header>
+
+  <main>
+    <div class="sort-container" id="sort-container">
+      <!-- Bars for displaying the sorting process will be generated here -->
+    </div>
+  </main>
+
+  <footer>
     <div class="footer-content">
-        <p class="credit">created by Jerome Sommerfeldt</p>
-        <div class="social-icons">
+      <p class="credit">created by Jerome Sommerfeldt</p>
+      <div class="social-icons">
         <a href="https://github.com/jexxme" target="_blank">
           <img src="github-mark-white.svg" alt="GitHub Icon">
         </a>
@@ -53,4 +60,5 @@
   </footer>
 </body>
 <script src="script.js"></script>
+
 </html>
