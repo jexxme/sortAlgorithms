@@ -14,6 +14,17 @@ let isSorting = false;
 let sortingCancelled = false;
 let sortingPromise = null;
 
+
+
+// Add a global variable to track the mute state (true for muted, false for unmuted)
+let isMuted = false;
+
+// Function to toggle the mute state
+document.getElementById("mute-sound").addEventListener("change", () => {
+    isMuted = document.getElementById("mute-sound").checked;
+});
+
+
 function startSorting() {
     if (sortingPromise) {
         sortingCancelled = true; // Cancel the previous sorting
@@ -110,6 +121,20 @@ function updateSpeedLabel() {
     document.getElementById("speed-label").textContent = `${speed}ms`;
 }
 
+
+// Modify the playSound function to check the mute state before playing sound
+function playSound(audioContext, frequency) {
+    if (!isMuted) {
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = "sine"; // You can change the wave type as needed
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+        oscillator.connect(audioContext.destination);
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.05); // Adjust the duration of the sound
+    }
+}
+
+
 async function bubbleSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
     const numBars = bars.length;
@@ -152,15 +177,6 @@ async function bubbleSort(container, speed) {
 
 }
 
-
-function playSound(audioContext, frequency) {
-    const oscillator = audioContext.createOscillator();
-    oscillator.type = "sine"; // You can change the wave type as needed
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    oscillator.connect(audioContext.destination);
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.05); // Adjust the duration of the sound
-}
 
 
 
