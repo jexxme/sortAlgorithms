@@ -203,9 +203,11 @@ footer {
 #sound-control {
     cursor: pointer;
     display: inline-block;
-    margin: 1%;
+    margin: 5px;
+
+    align-items: center;
 }
 
-#sound-off {
+#sound-on {
     display: none;
 }

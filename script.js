@@ -34,9 +34,7 @@ function toggleSound() {
 document.getElementById("sound-control").addEventListener("click", toggleSound);
 
 // Initialize the sound state (off)
-toggleSound();
-console.log("Jetzt sollte der sound togglen")
-
+// toggleSound();
 
 function startSorting() {
     if (sortingPromise) {
@@ -72,6 +70,7 @@ function initiateSorting() { // Renamed function
         merge: mergeSort,
         heap: heapSort,
         counting: countingSort,
+        radix: radixSort, 
         // Add more sorting algorithms here
     };
 
@@ -148,7 +147,6 @@ function playSound(audioContext, frequency) {
     }
 }
 
-
 async function bubbleSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
     const numBars = bars.length;
@@ -190,15 +188,6 @@ async function bubbleSort(container, speed) {
     }
 
 }
-
-
-
-
-
-
-
-
-
 
 async function insertionSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
@@ -599,54 +588,153 @@ async function heapify(bars, numBars, i, speed) {
 }
 
 
-
 async function countingSort(container, speed) {
     const bars = container.querySelectorAll(".bar");
     const numBars = bars.length;
 
-    // Find the maximum and minimum values in the array
-    let max = -Infinity;
-    let min = Infinity;
+    // Find the maximum value in the bars
+    let max = -1;
     for (let i = 0; i < numBars; i++) {
         const height = parseInt(bars[i].style.height);
         if (height > max) {
             max = height;
         }
-        if (height < min) {
-            min = height;
-        }
     }
 
-    // Create a counting array to store the count of each element
-    const countArray = new Array(max - min + 1).fill(0);
+    // Initialize the counting array
+    const count = Array(max + 1).fill(0);
 
-    // Count the occurrences of each element in the input array
+    // Count the occurrences of each value
     for (let i = 0; i < numBars; i++) {
         const height = parseInt(bars[i].style.height);
-        countArray[height - min]++;
+        count[height]++;
+        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bars being counted
+        await sleep(speed); // Adjust the animation speed
+        bars[i].style.backgroundColor = "#333"; // Reset the color
     }
 
-    // Update the bars array with the sorted values
-    let index = 0;
-    for (let i = 0; i < countArray.length; i++) {
-        while (countArray[i] > 0) {
+    let k = 0;
+
+    // Update the bars with the sorted values
+    for (let i = 0; i <= max; i++) {
+        for (let j = 0; j < count[i]; j++) {
             if (sortingCancelled) {
                 return; // Exit the sorting function if sorting is cancelled
             }
-            bars[index].style.height = `${i + min}px`;
-            bars[index].style.backgroundColor = "#01FF70"; // Green
-            index++;
-            countArray[i]--;
+
+            bars[k].style.height = `${i}px`;
+            bars[k].style.backgroundColor = "#01FF70"; // Highlight the bars being placed
             await sleep(speed); // Adjust the animation speed
+            bars[k].style.backgroundColor = "#333"; // Reset the color
+
+            k++;
         }
     }
 
-    // Play a sound after the sorting is complete
+    // Play a sound after sorting is complete
     for (let i = 0; i < numBars; i++) {
         if (sortingCancelled) {
             return; // Exit the sorting function if sorting is cancelled
         }
         const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
         playSound(audioContext, frequency);
+        bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
     }
+}
+
+
+
+
+
+async function radixSort(container, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
+
+    // Find the maximum value in the bars
+    let max = -1;
+    for (let i = 0; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        if (height > max) {
+            max = height;
+        }
+    }
+
+    // Determine the number of digits in the maximum value
+    let maxDigitCount = 0;
+    while (max > 0) {
+        max = Math.floor(max / 10);
+        maxDigitCount++;
+    }
+
+    // Perform counting sort for each digit position
+    for (let digit = 1; digit <= maxDigitCount; digit++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        await countingSortByDigit(container, digit, speed);
+    }
+
+
+    for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
+        bars[i].style.backgroundColor = "#01FF70";
+        await sleep(15); // Adjust the animation speed
+    }
+
+}
+
+
+async function countingSortByDigit(container, digit, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
+
+    // Initialize the counting array
+    const count = Array(10).fill(0);
+
+    // Count the occurrences of each digit at the specified position
+    for (let i = 0; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        const digitValue = getDigitAt(height, digit);
+        count[digitValue]++;
+        bars[i].style.backgroundColor = "#FF4136"; // Highlight the bars being counted
+        await sleep(speed); // Adjust the animation speed
+        bars[i].style.backgroundColor = "#333"; // Reset the color
+    }
+
+    // Calculate cumulative counts
+    for (let i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // Create a temporary array to hold the sorted values
+    const temp = Array(numBars);
+
+    // Build the temporary array in reverse order to maintain stability
+    for (let i = numBars - 1; i >= 0; i--) {
+        const height = parseInt(bars[i].style.height);
+        const digitValue = getDigitAt(height, digit);
+        temp[count[digitValue] - 1] = height;
+        count[digitValue]--;
+    }
+
+    // Update the bars with the sorted values
+    for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        bars[i].style.height = `${temp[i]}px`;
+        bars[i].style.backgroundColor = "#01FF70"; // Highlight the bars being placed
+        await sleep(speed); // Adjust the animation speed
+        bars[i].style.backgroundColor = "#333"; // Reset the color
+    }
+}
+
+function getDigitAt(num, digit) {
+    // Get the digit at the specified position (1-based)
+    return Math.floor(num / Math.pow(10, digit - 1)) % 10;
 }
