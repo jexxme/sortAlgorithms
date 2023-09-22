@@ -71,6 +71,7 @@ function initiateSorting() { // Renamed function
         quick: quickSort,
         merge: mergeSort,
         heap: heapSort,
+        counting: countingSort,
         // Add more sorting algorithms here
     };
 
@@ -594,5 +595,58 @@ async function heapify(bars, numBars, i, speed) {
         bars[largest].style.backgroundColor = "#333";
 
         await heapify(bars, numBars, largest, speed);
+    }
+}
+
+
+
+async function countingSort(container, speed) {
+    const bars = container.querySelectorAll(".bar");
+    const numBars = bars.length;
+
+    // Find the maximum and minimum values in the array
+    let max = -Infinity;
+    let min = Infinity;
+    for (let i = 0; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        if (height > max) {
+            max = height;
+        }
+        if (height < min) {
+            min = height;
+        }
+    }
+
+    // Create a counting array to store the count of each element
+    const countArray = new Array(max - min + 1).fill(0);
+
+    // Count the occurrences of each element in the input array
+    for (let i = 0; i < numBars; i++) {
+        const height = parseInt(bars[i].style.height);
+        countArray[height - min]++;
+    }
+
+    // Update the bars array with the sorted values
+    let index = 0;
+    for (let i = 0; i < countArray.length; i++) {
+        while (countArray[i] > 0) {
+            if (sortingCancelled) {
+                return; // Exit the sorting function if sorting is cancelled
+            }
+            bars[index].style.height = `${i + min}px`;
+            bars[index].style.backgroundColor = "#01FF70"; // Green
+            index++;
+            countArray[i]--;
+            await sleep(speed); // Adjust the animation speed
+        }
+    }
+
+    // Play a sound after the sorting is complete
+    for (let i = 0; i < numBars; i++) {
+        if (sortingCancelled) {
+            return; // Exit the sorting function if sorting is cancelled
+        }
+        const frequency = 10 + (i * 20); // Adjust the initial frequency and increment as needed
+        playSound(audioContext, frequency);
     }
 }

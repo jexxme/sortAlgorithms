@@ -13,7 +13,7 @@
 
 <body>
   <header>
-    <h1>Sorting Algorithms</h1>
+    <h1>Sorting Algorithms visualized</h1>
     <div class="header-buttons">
 
       <label for="algorithm">Select an Algorithm:</label>
@@ -29,7 +29,16 @@
           <option value="merge">Merge Sort</option>
           <option value="heap">Heap Sort</option>
         </optgroup>
-        <!-- Add more sorting algorithms here -->
+        <optgroup label="O(n)">
+          <option value="counting">Counting Sort</option>
+          <option value="radix">Radix Sort</option>
+        </optgroup>
+        <optgroup label="O(n * sqrt(n))">
+          <option value="bucket">Bucket Sort</option>
+        </optgroup>
+        <optgroup label="O(1)">
+          <option value="constant">Constant Time Sort</option>
+        </optgroup>
       </select>
 
       <label for="speed-slider">Delay:</label>
