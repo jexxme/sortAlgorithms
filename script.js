@@ -1,22 +1,13 @@
 document.getElementById("start-sorting").addEventListener("click", toggleStartStopButton);
-
-// document.getElementById("start-sorting").addEventListener("click", startSorting);
 document.getElementById("speed-slider").addEventListener("input", updateSpeedLabel);
 
 // Sound Class 
 const audioContext = new (window.AudioContext || window.AudioContext)();
 
-
-
 // Add a global variable to track the sorting state (true for "Start", false for "Stop")
 let isSorting = false;
-
 let sortingCancelled = false;
 let sortingPromise = null;
-
-
-
-
 
 // Initialize the mute state as true (sound off)
 let isMuted = true;
@@ -45,10 +36,6 @@ document.getElementById("sound-control").addEventListener("click", toggleSound);
 // Initialize the sound state (off)
 toggleSound();
 console.log("Jetzt sollte der sound togglen")
-
-
-
-
 
 
 function startSorting() {

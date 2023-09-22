@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      #block2 { fill: white; }
+      #block3 { fill: white; }
+      #block4 { fill: white; }
+      #block5 { fill: white; }
+    }
+  </style>
+
+  <g id="logo">
+    <rect id="block1" x="20" y="10" width="4" height="17" fill="#D10000"/>
+    <rect id="block2" x="26" y="5" width="4" height="22" fill="black"/>
+    <rect id="block3" x="2" y="23" width="4" height="4" fill="black"/>
+    <rect id="block4" x="8" y="19" width="4" height="8" fill="black"/>
+    <rect id="block5" x="14" y="17" width="4" height="10" fill="black"/>
+  </g>
+</svg>
