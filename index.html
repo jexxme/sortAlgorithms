@@ -18,28 +18,26 @@
 
       <label for="algorithm">Select an Algorithm:</label>
       <select id="algorithm">
-        <optgroup label="O(n^2)">
+        <optgroup label="Simple Sorting Algorithms (O(n^2))">
           <option value="bubble">Bubble Sort</option>
           <option value="insertion">Insertion Sort</option>
           <option value="selection">Selection Sort</option>
         </optgroup>
-        <optgroup label="O(n log n)">
+        <optgroup label="Efficient Sorting Algorithms (O(n log n))">
           <option value="shell">Shell Sort</option>
           <option value="quick">Quick Sort</option>
           <option value="merge">Merge Sort</option>
           <option value="heap">Heap Sort</option>
         </optgroup>
         <optgroup label="Other">
-          <option value="counting">Counting Sort [O(n+k)]</option>
-          <option value="radix">Radix Sort [O(l*n)]</option>
-        </optgroup>
-        <optgroup label="O(n * sqrt(n))">
+          <option value="counting">Counting Sort</option>
+          <option value="radix">Radix Sort</option>
           <option value="bucket">Bucket Sort</option>
-        </optgroup>
-        <optgroup label="O(1)">
           <option value="constant">Constant Time Sort</option>
         </optgroup>
       </select>
+      
+      
 
       <label for="speed-slider">Delay:</label>
       <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">

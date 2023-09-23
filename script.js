@@ -44,7 +44,7 @@ function startSorting() {
             // startNewSorting(); // Assuming there is a function named startNewSorting
         });
     } else {
-        initiateSorting(); // Call the renamed function
+        initiateSorting(); 
     }
 }
 
@@ -80,6 +80,8 @@ function initiateSorting() { // Renamed function
         sortingPromise = algorithmFunction(container, speed);
         sortingPromise.then(() => {
             sortingPromise = null; // Reset the promise
+            isSorting = false; // Set isSorting to false when sorting is done
+            
         });
     }
 }
