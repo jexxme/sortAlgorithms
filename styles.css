@@ -202,3 +202,72 @@ footer {
 #sound-on {
     display: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Global styles remain unchanged */
+
+/* ... existing CSS ... */
+
+/* Media query for tablets */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 22px; /* Smaller font size for smaller screens */
+    }
+
+    .header-buttons label,
+    .header-buttons select,
+    .header-buttons input,
+    .header-buttons span,
+    .header-buttons button {
+        margin: 0 1px; /* Less margin for smaller screens */
+        padding: 5px 10px; /* Smaller padding for smaller screens */
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+    
+    #speed-slider {
+        width: 80px; /* Smaller width for smaller screens */
+    }
+}
+
+/* Media query for mobile phones */
+@media (max-width: 480px) {
+    header {
+        flex-direction: column; /* Stack the header items on small screens */
+        padding: 10px 0; /* Less padding for smaller screens */
+    }
+    
+    h1 {
+        padding: 10px 0; /* Adjust padding for title */
+        font-size: 18px; /* Even smaller font size for very small screens */
+    }
+    
+    .header-buttons {
+        flex-direction: column; /* Stack the buttons on small screens */
+    }
+    
+    .header-buttons label,
+    .header-buttons select,
+    .header-buttons input,
+    .header-buttons span,
+    .header-buttons button {
+        margin: 5px 0; /* More vertical space between items when stacked */
+        font-size: 14px; /* Adjust font size for better readability */
+    }
+    
+    #algorithm, #start-sorting, .stop-button {
+        width: 100%; /* Full width buttons for better accessibility */
+        margin-bottom: 10px; /* Add space between stacked elements */
+    }
+}
