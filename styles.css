@@ -6,20 +6,24 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
 }
 
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: white;
+    color: #333;
     text-align: center;
     padding: 20px 0;
     display: flex;
     justify-content: space-between;
     /* To place everything on the right side */
     align-items: center;
+
+    border-bottom: 2px solid #e7e7e7; /* Slight border for definition */
+    overflow: hidden;
+
 }
 
 h1 {
@@ -82,7 +86,7 @@ button {
 }
 
 #start-sorting {
-    background-color: #009e05;
+    background-color: #00db07;
     /* Red background color */
     color: #fff;
     /* White text color */
@@ -100,7 +104,7 @@ button {
 }
 
 #start-sorting:hover {
-    background-color: #07bb0ddb;
+    background-color: #00aa06db;
     /* Darker red on hover */
 }
 
@@ -153,58 +157,45 @@ main {
 
 
 
+
 footer {
-    text-align: center;
-    /* Center-align the content horizontally */
-    background-color: #333;
-    /* Choose your preferred background color */
-    color: #fff;
-    /* Choose your preferred text color */
-    padding: 20px 0;
-    /* Adjust as needed */
-
-}
-
-.footer-content {
-    display: inline-block;
-    /* Center-align inline content */
-}
-
-.social-icons {
-    margin-top: 10px;
-    /* Add some space between the name and icons */
-}
-
-.social-icons a {
-    margin: 0 10px;
-    /* Add space between icons */
-    display: inline-block;
-    /* Display icons in a row */
+    width: 100%;
+    background-color: #fff; /* Transparent background */
+    padding: 15px 0; /* Add some padding */
+    position: fixed; /* Fixed at the bottom */
+    bottom: 0; /* Align to bottom */
+    left: 0; /* Align to left */
+  
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* Rest of your styles... */
+  
+  
+  }
+  
+  .footer-icons {
+    display: flex;
+    justify-content: center; /* Center the icons horizontally */
+    align-items: center; /* Center the icons vertically */
+    gap: 25px; /* Space between icons */
+  }
+  
+  .footer-icons a {
     text-decoration: none;
-    /* Remove underlines from links */
-    color: #fff;
-    /* Choose icon color */
-}
-
-/* Style the icons as needed */
-.social-icons img {
-    width: 24px;
-    /* Adjust the icon size as needed */
-    height: 24px;
-}
-
-.credit {
-    font-size: 14px;
-    /* Adjust the font size as needed */
-    /* Additional styles if desired */
-}
-
+    color: inherit; /* Take the color from the parent */
+    font-size: 1.5rem; /* Size of icons */
+  }
+  
+  .fa {
+    font-size: 50px; /* Size of icons */
+  }
 
 #sound-control {
     cursor: pointer;
     display: inline-block;
     margin: 5px;
-
     align-items: center;
 }
 
